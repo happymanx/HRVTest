@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C798FDD206B4C180076805F /* statnn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C798FDB206B4C180076805F /* statnn.cpp */; };
 		7C9BFE0B2043EE4A004B17D6 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BFE0A2043EE4A004B17D6 /* main.mm */; };
 		7CBBF54A206A2C2300EBC803 /* lomb.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CBBF548206A2C2300EBC803 /* lomb.c */; };
-		7CBBF54D206A471F00EBC803 /* pwr.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CBBF54B206A471F00EBC803 /* pwr.c */; };
+		7CBBF54D206A471F00EBC803 /* pwr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CBBF54B206A471F00EBC803 /* pwr.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,11 +29,13 @@
 		7C026AF02068D17400F808EF /* foo.frr */ = {isa = PBXFileReference; lastKnownFileType = text; path = foo.frr; sourceTree = "<group>"; };
 		7C026AF1206904BF00F808EF /* foo.nn */ = {isa = PBXFileReference; lastKnownFileType = text; path = foo.nn; sourceTree = "<group>"; };
 		7C026AF2206904BF00F808EF /* foo.fft */ = {isa = PBXFileReference; lastKnownFileType = text; path = foo.fft; sourceTree = "<group>"; };
+		7C798FDB206B4C180076805F /* statnn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = statnn.cpp; sourceTree = "<group>"; };
+		7C798FDC206B4C180076805F /* statnn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = statnn.h; sourceTree = "<group>"; };
 		7C9BFE072043EE4A004B17D6 /* TestHRV */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestHRV; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C9BFE0A2043EE4A004B17D6 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		7CBBF548206A2C2300EBC803 /* lomb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lomb.c; sourceTree = "<group>"; };
 		7CBBF549206A2C2300EBC803 /* lomb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lomb.h; sourceTree = "<group>"; };
-		7CBBF54B206A471F00EBC803 /* pwr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pwr.c; sourceTree = "<group>"; };
+		7CBBF54B206A471F00EBC803 /* pwr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pwr.cpp; sourceTree = "<group>"; };
 		7CBBF54C206A471F00EBC803 /* pwr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pwr.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,8 +75,10 @@
 				7C026AF1206904BF00F808EF /* foo.nn */,
 				7CBBF548206A2C2300EBC803 /* lomb.c */,
 				7CBBF549206A2C2300EBC803 /* lomb.h */,
-				7CBBF54B206A471F00EBC803 /* pwr.c */,
+				7CBBF54B206A471F00EBC803 /* pwr.cpp */,
 				7CBBF54C206A471F00EBC803 /* pwr.h */,
+				7C798FDB206B4C180076805F /* statnn.cpp */,
+				7C798FDC206B4C180076805F /* statnn.h */,
 			);
 			path = TestHRV;
 			sourceTree = "<group>";
@@ -135,7 +140,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CBBF54D206A471F00EBC803 /* pwr.c in Sources */,
+				7CBBF54D206A471F00EBC803 /* pwr.cpp in Sources */,
+				7C798FDD206B4C180076805F /* statnn.cpp in Sources */,
 				7C9BFE0B2043EE4A004B17D6 /* main.mm in Sources */,
 				7CBBF54A206A2C2300EBC803 /* lomb.c in Sources */,
 			);

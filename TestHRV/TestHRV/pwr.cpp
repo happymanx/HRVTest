@@ -4,22 +4,25 @@
  pwr :
  Usage: pwr
  Calculate total (and relative) power in fft between lo and hi.
- TOT PWR, ULF PWR, VLF PWR, LF PWR, HF PWR
- 0 0.0033, 0.0033 0.04, 0 0.04, 0.04 0.15, 0.15 0.4
+ 
+ Input:
+ 
+ Output: Array[6]
+ TOT PWR, ULF PWR, VLF PWR, LF PWR, HF PWR, LF/HF
+ 0~0.04, 0~0.0033, 0.0033~0.04, 0.04~0.15, 0.15~0.4, (0.04~0.15 / 0.15~0.4)
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "pwr.h"
 
 #define MAXBANDS 10
-#define RESULT_NUMBER 6
+#define F_RESULT_NUMBER 6
 
-double *getFrequencyResult(void);
-
-int main()
+int mainxqq()
 {
     double *result = getFrequencyResult();
-    for (int i = 0; i < RESULT_NUMBER; i++) {
+    for (int i = 0; i < F_RESULT_NUMBER; i++) {
         printf("%g", result[i]);
         printf("\n");
     }
@@ -44,12 +47,12 @@ double *getFrequencyResult(void)
     
     // TOT PWR
     lo[0] = 0.0;
-    hi[0] = 0.0033;
+    hi[0] = 0.04;
     // ULF PWR
-    lo[1] = 0.0033;
-    hi[1] = 0.04;
+    lo[1] = 0.0;
+    hi[1] = 0.0033;
     // VLF PWR
-    lo[2] = 0.0;
+    lo[2] = 0.0033;
     hi[2] = 0.04;
     // LF PWR
     lo[3] = 0.04;
@@ -106,7 +109,7 @@ double *getFrequencyResult(void)
     double LF_HF = pr[3]/pr[4];
 
     // TOT PWR, ULF PWR, VLF PWR, LF PWR, HF PWR, LF/HF
-    static double frequency[RESULT_NUMBER];
+    static double frequency[F_RESULT_NUMBER];
     frequency[0] = TOT_PWR;
     frequency[1] = ULF_PWR;
     frequency[2] = VLF_PWR;

@@ -10,5 +10,6 @@
 #define pwr_h
 
 #include <stdio.h>
+double *getFrequencyResult(void);
 
 #endif /* pwr_h */
