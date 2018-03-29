@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 
-double *getTimeResult(int x, int y, double a[][3]);
+#define T_RESULT_NUMBER 7
+
+double *getTimeResult(int x, int y, double inputData[][3]);
 
 #endif /* statnn_h */

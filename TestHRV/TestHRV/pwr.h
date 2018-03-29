@@ -10,6 +10,8 @@
 #define pwr_h
 
 #include <stdio.h>
-double *getFrequencyResult(void);
+#define F_RESULT_NUMBER 6
+
+double *getFrequencyResult(int x, int y, double inputData[][2]);
 
 #endif /* pwr_h */

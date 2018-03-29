@@ -15,23 +15,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pwr.h"
+#include "lomb.h"
 
 #define MAXBANDS 10
-#define F_RESULT_NUMBER 6
 
-int mainxqq()
+double *getFrequencyResult(int x, int y, double inputData[][2])
 {
-    double *result = getFrequencyResult();
-    for (int i = 0; i < F_RESULT_NUMBER; i++) {
-        printf("%g", result[i]);
-        printf("\n");
-    }
+//    getPowerResult(x, y, inputData);
     
-    return 1;
-}
-
-double *getFrequencyResult(void)
-{
     int n, nbands;
     double lo[MAXBANDS], hi[MAXBANDS], pr[MAXBANDS], tot;
     double freq[2], mag[2], pwr;

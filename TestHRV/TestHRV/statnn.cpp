@@ -28,7 +28,6 @@ char line[SIZE];
 #define NNDIF 0.05
 #define ABS(A) ((A) < 0 ? -(A) : (A))
 #define ROFFERR 1e-10
-#define T_RESULT_NUMBER 7
 
 void split(char **arr, char *str, const char *del) {
     char *s = strtok(str, del);
@@ -50,7 +49,7 @@ void split(char **arr, char *str, const char *del) {
 //    return 1;
 //}
 
-double *getTimeResult(int x, int y, double a[][3])
+double *getTimeResult(int x, int y, double inputData[][3])
 {
     char ann, lastann[2];
     int i, j, len, lflag, mflag, sflag;
@@ -86,21 +85,14 @@ double *getTimeResult(int x, int y, double a[][3])
     lastann[1] = ann = 'N';
     end = t + len;
     
-    fstream fin;
-    fin.open("foo.frr",ios::in);
-    while(fin.getline(line,sizeof(line),'\n')){
-//        cout<<line<<endl;
-        
-        char *arr[3];
-        const char *del = " ";
-        split(arr, line, del);
-        
-        t = atof(arr[0]);
-        rr = atof(arr[1]);
-        string str = arr[2];
-        char *cstr = new char[str.length() + 1];
-        strcpy(cstr, str.c_str());
-        ann = cstr[0];
+//    fstream fin;
+//    fin.open("foo.frr",ios::in);
+    
+    for (int index = 0; index < x; index++) {
+        t = inputData[index][0];
+        rr = inputData[index][1];
+        char cstr = (int)inputData[index][2];
+        ann = cstr;
         
         while (t > end+len) {
             i++;
@@ -148,6 +140,16 @@ double *getTimeResult(int x, int y, double a[][3])
         lastann[0] = lastann[1];
         lastann[1] = ann;
     }
+    
+//    while(fin.getline(line,sizeof(line),'\n')){
+////        cout<<line<<endl;
+//        
+//        char *arr[3];
+//        const char *del = " ";
+//        split(arr, line, del);
+//        
+//
+//    }
     
     if (nnn > 1) {
         ratbuf[i] = (double)nnn/nrr;

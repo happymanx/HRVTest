@@ -279,12 +279,13 @@ int isign;
 
 FILE *ifile;
 float *x, *y, *wk1, *wk2;
+double *xx, *yy;
 long nmax = 512L;    /* Initial buffer size (must be a power of 2).
                       Note that input() will increase this value as
                       necessary by repeated doubling, depending on
                       the length of the input series. */
 
-mainxx(argc, argv)
+main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -325,7 +326,16 @@ char *argv[];
             }
         }
     }
-    
+    /*
+     ex: foo.nn
+     0.596 0.596
+     1.188 0.592
+     1.788 0.600
+     2.392 0.604
+     2.996 0.604
+     3.588 0.592
+     ...
+     */
     ifile = fopen("foo.nn", "rt");
     
     if (ifile == NULL) {
@@ -526,5 +536,53 @@ unsigned long n;
         ysum /= n;
         for (i = 0; i < n; i++)
             y[i] -= ysum;
-            }
+}
+
+
+double** createArray(int m, int n)
+{
+    double* values = calloc(m*n, sizeof(double));
+    double** rows = malloc(n*sizeof(double*));
+    for (int i=0; i<n; ++i)
+    {
+        rows[i] = values + i*m;
+    }
+    return rows;
+}
+
+void destroyArray(double** arr)
+{
+    free(*arr);
+    free(arr);
+}
+
+double **getPowerResult(int x, int y, double inputData[][2])
+{
+    float xxx[x];
+    float yyy[x];
+    for (int i = 0; i < x; i++) {
+        xxx[i] = inputData[i][0];
+        yyy[i] = inputData[i][1];
+    }
+    
+    float prob;
+    unsigned long nout, jmax, maxout;
+    
+    /* Compute the Lomb periodogram. */
+    fasper(xxx-1, yyy-1, x, 4.0, 2.0, wk1-1, wk2-1, 64*nmax, &nout, &jmax, &prob);
+
+    maxout = nout/2;
+
+    printf("%g\t%g\n", wk1[x], sqrt(wk2[x]/(nout/(2.0*pwr))));
+
+    double** powerData = createArray(x * 2,2);
+    powerData[0][0] = 1;
+    powerData[0][1] = 1;
+    powerData[1][0] = 2;
+    powerData[1][1] = 2;
+    
+//    destroyArray(powerData);
+
+    return powerData;
+}
 

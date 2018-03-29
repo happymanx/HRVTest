@@ -11,4 +11,6 @@
 
 #include <stdio.h>
 
+double **getPowerResult(int x, int y, double inputData[][2]);
+
 #endif /* lomb_h */
