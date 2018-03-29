@@ -15,24 +15,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pwr.h"
-#include "lomb.h"
+
+//extern "C"
+//{
+    #include "lomb.h"
+//}
 
 #define MAXBANDS 10
 
 double *getFrequencyResult(int x, int y, double inputData[][2])
 {
-//    getPowerResult(x, y, inputData);
+    double **powerData = getPowerResult(x, y, inputData);
     
     int n, nbands;
     double lo[MAXBANDS], hi[MAXBANDS], pr[MAXBANDS], tot;
     double freq[2], mag[2], pwr;
     
-    FILE *ifile;
-    ifile = fopen("foo.fft", "rt");
-    
-    if (ifile == NULL) {
-        exit(1);
-    }
+//    FILE *ifile;
+//    ifile = fopen("foo.fft", "rt");
+//
+//    if (ifile == NULL) {
+//        exit(1);
+//    }
     
     nbands = 5;
     
@@ -54,10 +58,15 @@ double *getFrequencyResult(int x, int y, double inputData[][2])
     
     tot = 0.0;
     
-    if (fscanf(ifile, "%lf%lf", &freq[0], &mag[0]) != 2)
-        exit(2);
-    if (fscanf(ifile, "%lf%lf", &freq[1], &mag[1]) != 2)
-        exit(2);
+    freq[0] = powerData[0][0];
+    mag[0] = powerData[0][1];
+    freq[1] = powerData[1][0];
+    mag[1] = powerData[1][1];
+
+//    if (fscanf(ifile, "%lf%lf", &freq[0], &mag[0]) != 2)
+//        exit(2);
+//    if (fscanf(ifile, "%lf%lf", &freq[1], &mag[1]) != 2)
+//        exit(2);
     
     pwr = mag[0]*mag[0];
     tot += pwr;
@@ -68,7 +77,10 @@ double *getFrequencyResult(int x, int y, double inputData[][2])
     freq[0] = freq[1];
     mag[0] = mag[1];
     
-    while (fscanf(ifile, "%lf%lf", &freq[1], &mag[1]) == 2) {
+    for (int i = 2; i < x * 2; i++) {
+        freq[1] = powerData[i][0];
+        mag[1] = powerData[i][1];
+
         pwr = mag[0]*mag[0];
         tot += pwr;
         for (n=0; n<nbands; n++) {
@@ -78,6 +90,17 @@ double *getFrequencyResult(int x, int y, double inputData[][2])
         freq[0] = freq[1];
         mag[0] = mag[1];
     }
+    
+//    while (fscanf(ifile, "%lf%lf", &freq[1], &mag[1]) == 2) {
+//        pwr = mag[0]*mag[0];
+//        tot += pwr;
+//        for (n=0; n<nbands; n++) {
+//            if (freq[0] >= lo[n] && freq[0] <= hi[n])
+//                pr[n] += pwr;
+//        }
+//        freq[0] = freq[1];
+//        mag[0] = mag[1];
+//    }
     
     pwr = mag[0]*mag[0];
     tot += pwr;

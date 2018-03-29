@@ -4,9 +4,13 @@
 #include <string>
 using namespace std;
 
+extern "C"
+{
 #include "statnn.h"
 #include "pwr.h"
 #import "lomb.h"
+
+}
 
 #define SIZEX 1000
 char linex[SIZEX];
@@ -20,7 +24,7 @@ void splitx(char **arr, char *str, const char *del) {
     }
 }
 
-int mainQ()
+int main()
 {
     fstream fin;
     fin.open("foo.frr",ios::in);

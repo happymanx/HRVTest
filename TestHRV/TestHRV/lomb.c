@@ -285,7 +285,7 @@ long nmax = 512L;    /* Initial buffer size (must be a power of 2).
                       necessary by repeated doubling, depending on
                       the length of the input series. */
 
-main(argc, argv)
+mainQ(argc, argv)
 int argc;
 char *argv[];
 {
@@ -558,28 +558,82 @@ void destroyArray(double** arr)
 
 double **getPowerResult(int x, int y, double inputData[][2])
 {
-    float xxx[x];
-    float yyy[x];
-    for (int i = 0; i < x; i++) {
-        xxx[i] = inputData[i][0];
-        yyy[i] = inputData[i][1];
+    float *xxx;
+    float *yyy;
+
+    if ((xxx = (float *)malloc(nmax * sizeof(float))) == NULL ||
+        (yyy = (float *)malloc(nmax * sizeof(float))) == NULL ||
+        (wk1 = (float *)malloc(64 * nmax * sizeof(float))) == NULL ||
+        (wk2 = (float *)malloc(64 * nmax * sizeof(float))) == NULL) {
+        if (xxx) (void)free(xxx);
+        fclose(ifile);
+        error("insufficient memory");
     }
-    
+
     float prob;
     unsigned long nout, jmax, maxout;
+    
+    unsigned long npts = 0L;
+
+    for (int i = 0; i < x; i++) {
+        xxx[npts] = inputData[i][0];
+        yyy[npts] = inputData[i][1];
+        
+        if (++npts >= nmax) {    /* double the size of the input buffers */
+            float *xt, *yt, *w1t, *w2t;
+            unsigned long nmaxt = nmax << 1;
+            
+            if (64 * nmaxt * sizeof(float) < nmax) {
+                fprintf(stderr,
+                        "%s: insufficient memory, truncating input at row %lu\n",
+                        pname, npts);
+                break;
+            }
+            if ((xt = (float *)realloc(xxx, nmaxt * sizeof(float))) == NULL) {
+                fprintf(stderr,
+                        "%s: insufficient memory, truncating input at row %lu\n",
+                        pname, npts);
+                break;
+            }
+            xxx = xt;
+            if ((yt = (float *)realloc(yyy, nmaxt * sizeof(float))) == NULL) {
+                fprintf(stderr,
+                        "%s: insufficient memory, truncating input at row %lu\n",
+                        pname, npts);
+                break;
+            }
+            yyy = yt;
+            if ((w1t = (float *)realloc(wk1,64*nmaxt*sizeof(float))) == NULL){
+                fprintf(stderr,
+                        "%s: insufficient memory, truncating input at row %lu\n",
+                        pname, npts);
+                break;
+            }
+            wk1 = w1t;
+            if ((w2t = (float *)realloc(wk2,64*nmaxt*sizeof(float))) == NULL){
+                fprintf(stderr,
+                        "%s: insufficient memory, truncating input at row %lu\n",
+                        pname, npts);
+                break;
+            }
+            wk2 = w2t;
+            nmax = nmaxt;
+        }
+    }
+    
     
     /* Compute the Lomb periodogram. */
     fasper(xxx-1, yyy-1, x, 4.0, 2.0, wk1-1, wk2-1, 64*nmax, &nout, &jmax, &prob);
 
     maxout = nout/2;
 
-    printf("%g\t%g\n", wk1[x], sqrt(wk2[x]/(nout/(2.0*pwr))));
+    double** powerData = createArray(2,(int)maxout);
 
-    double** powerData = createArray(x * 2,2);
-    powerData[0][0] = 1;
-    powerData[0][1] = 1;
-    powerData[1][0] = 2;
-    powerData[1][1] = 2;
+    for (int n = 0; n < maxout; n++) {
+//        printf("%g\t%g\n", wk1[n], sqrt(wk2[n]/(nout/(2.0*pwr))));
+        powerData[n][0]=wk1[n];
+        powerData[n][1]=sqrt(wk2[n]/(nout/(2.0*pwr)));
+    }
     
 //    destroyArray(powerData);
 

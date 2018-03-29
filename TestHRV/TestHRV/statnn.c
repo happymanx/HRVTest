@@ -14,29 +14,11 @@
 
 #include "statnn.h"
 
-#include <iostream>
-#include <fstream>
-#include <string>
-
-using namespace std;
-
-#define SIZE 100
-char line[SIZE];
-
 #define MAXBUF 2400
 #define MAXP 10
 #define NNDIF 0.05
 #define ABS(A) ((A) < 0 ? -(A) : (A))
 #define ROFFERR 1e-10
-
-void split(char **arr, char *str, const char *del) {
-    char *s = strtok(str, del);
-    
-    while(s != NULL) {
-        *arr++ = s;
-        s = strtok(NULL, del);
-    }
-}
 
 //int main()
 //{
@@ -84,9 +66,6 @@ double *getTimeResult(int x, int y, double inputData[][3])
     lastann[0] = 'X';
     lastann[1] = ann = 'N';
     end = t + len;
-    
-//    fstream fin;
-//    fin.open("foo.frr",ios::in);
     
     for (int index = 0; index < x; index++) {
         t = inputData[index][0];
@@ -140,16 +119,6 @@ double *getTimeResult(int x, int y, double inputData[][3])
         lastann[0] = lastann[1];
         lastann[1] = ann;
     }
-    
-//    while(fin.getline(line,sizeof(line),'\n')){
-////        cout<<line<<endl;
-//        
-//        char *arr[3];
-//        const char *del = " ";
-//        split(arr, line, del);
-//        
-//
-//    }
     
     if (nnn > 1) {
         ratbuf[i] = (double)nnn/nrr;
@@ -221,6 +190,5 @@ double *getTimeResult(int x, int y, double inputData[][3])
     time[6] = pnnx;
     
     return time;
-    
 }
 
