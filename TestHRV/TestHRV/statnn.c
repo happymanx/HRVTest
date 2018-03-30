@@ -4,7 +4,8 @@
  statnn :
  Usage: statnn
  Reads stdin: time(sec), interval(sec), annotation and calculates nn interval stats
- Outputs nn/rr, avnn, sdnn, sdann, sdnnindx, rmssd and pnn on stderr
+ Outputs: Array[6]
+ nn/rr, avnn, sdnn, sdann, sdnnindx, rmssd and pnn on stderr
  
  */
 
@@ -30,6 +31,7 @@
 //
 //    return 1;
 //}
+
 
 double *getTimeResult(int x, int y, double inputData[][3])
 {

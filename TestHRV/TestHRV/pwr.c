@@ -15,11 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pwr.h"
+#include "lomb.h"
 
-//extern "C"
-//{
-    #include "lomb.h"
-//}
 
 #define MAXBANDS 10
 

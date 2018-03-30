@@ -6,16 +6,15 @@ using namespace std;
 
 extern "C"
 {
-#include "statnn.h"
-#include "pwr.h"
-#import "lomb.h"
-
+    #include "statnn.h"
+    #include "pwr.h"
+    #import "lomb.h"
 }
 
-#define SIZEX 1000
-char linex[SIZEX];
+#define SIZE 1000
+char line[SIZE];
 
-void splitx(char **arr, char *str, const char *del) {
+void split(char **arr, char *str, const char *del) {
     char *s = strtok(str, del);
 
     while(s != NULL) {
@@ -29,7 +28,7 @@ int main()
     fstream fin;
     fin.open("foo.frr",ios::in);
     int number = 0;
-    while(fin.getline(linex,sizeof(linex),'\n')){
+    while(fin.getline(line,sizeof(line),'\n')){
         number++;
     }
     /*
@@ -50,10 +49,10 @@ int main()
     int nnNumber = 0;
     int ssNumber = 0;
     char lastAnnotation = 'X';
-    while(finx.getline(linex,sizeof(linex),'\n')){
+    while(finx.getline(line,sizeof(line),'\n')){
         char *arr[3];
         const char *del = " ";
-        splitx(arr, linex, del);
+        split(arr, line, del);
         
         inputDataForTimeDomain[i][0] = atof(arr[0]);
         inputDataForTimeDomain[i][1] = atof(arr[1]);
@@ -61,6 +60,7 @@ int main()
         strcpy(annotation, arr[2]);
         inputDataForTimeDomain[i][2] = (int)annotation[0];
         
+        // 過濾RR為NN
         if (annotation[0] == 'N' && lastAnnotation == 'N') {
             nnNumber++;
         }
